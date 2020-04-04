@@ -9,7 +9,7 @@
 
 Name:           %{?scl_prefix}perl-Term-ANSIColor
 Version:        4.06
-Release:        451%{?dist}
+Release:        452%{?dist}
 Summary:        Color screen output using ANSI escape sequences
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Term-ANSIColor
@@ -48,6 +48,7 @@ imported to be used.
 %prep
 %setup -q -n Term-ANSIColor-%{version}
 chmod -c -x examples/*
+%{?scl:scl enable %{scl} '}perl -MConfig -i -pe %{?scl:'"}'%{?scl:"'}s{^#!/usr/bin/perl}{$Config{startperl}}%{?scl:'"}'%{?scl:"'} examples/*%{?scl:'}
 
 %build
 %{?scl:scl enable %{scl} '}perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 && make %{?_smp_mflags}%{?scl:'}
@@ -66,6 +67,9 @@ chmod -c -x examples/*
 %{_mandir}/man3/*
 
 %changelog
+* Tue Mar 17 2020 Petr Pisar <ppisar@redhat.com> - 4.06-452
+- Normalize shebangs in the examples (bug #1813314)
+
 * Thu Jan 02 2020 Jitka Plesnikova <jplesnik@redhat.com> - 4.06-451
 - SCL
 
